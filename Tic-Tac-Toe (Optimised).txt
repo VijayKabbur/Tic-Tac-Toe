@@ -1,0 +1,150 @@
+#Python: Tic-Tac-Toe
+
+import random
+
+board = [0,1,2,3,4,5,6,7,8]
+l1 = [0,1,2]
+l2 = [6,0,3]
+
+def show():
+    print (board[0], '|', board[1], '|', board[2])
+    print ('---------')
+    print (board[3], '|', board[4], '|', board[5])
+    print ('---------')
+    print (board[6], '|', board[7], '|', board[8])
+
+def checkLine(char,spot1,spot2,spot3):
+    if board[spot1]==char and board[spot2]==char and board[spot3]==char:
+        return True
+    return False
+
+def checkAll(char):
+    if checkLine(char,0,1,2):
+        return True
+    if checkLine(char,3,4,5):
+        return True
+    if checkLine(char,6,7,8):
+        return True
+    if checkLine(char,0,3,6):
+        return True
+    if checkLine(char,1,4,7):
+        return True
+    if checkLine(char,2,5,8):
+        return True
+    if checkLine(char,0,4,8):
+        return True
+    if checkLine(char,2,4,6):
+        return True
+    return False
+
+def two(i,j,k,char):
+    if(board[i] == char and board[j] == char and board[k] != 'o' and board[k] != 'x'):
+        return True
+    else:
+        return False
+
+show()
+game = 0
+count = 0
+while (count<=9):
+    inp = input("Select a spot:")
+    inp = int(inp)
+    flag=0
+
+    if board[inp] != 'x' and board[inp] != 'o':
+        board[inp] = 'x'
+        count+=1
+
+        if checkAll('x') == True:
+            print ("~~ X WINS ~~")
+            game = 1
+            break;
+
+        if count==9:
+            break;
+
+        while True:
+            random.seed
+            opponent = random.randint(0,8)
+
+            flag=0
+            i=0
+            j=0
+            l2[0]=0
+            l2[1]=3
+            l2[2]=6
+            while (i<=9):
+                l1[0] = i
+                l1[1] = i+1
+                l1[2] = i+2
+                if (i==9):
+                    l1[0] = 0
+                    l1[1] = 4
+                    l1[2] = 8
+                    l2[0] = 2
+                    l2[1] = 4
+                    l2[2] = 6
+
+                j=0
+                while (j<3):
+                    temp = l1[0]
+                    l1[0] = l1[1]
+                    l1[1] = l1[2]
+                    l1[2] = temp
+                    if two(l1[0], l1[1], l1[2],'x') == True:
+                        flag=1
+                        opponent = l1[2]
+                        break;
+                    if two(l1[0], l1[1], l1[2],'o') == True:
+                        flag=1
+                        opponent = l1[2]
+                        break;
+                    
+                    temp = l2[0]
+                    l2[0] = l2[1]
+                    l2[1] = l2[2]
+                    l2[2] = temp
+                    if two(l2[0],l2[1],l2[2],'x') == True:
+                        flag = 1
+                        opponent = l2[2]
+                        break;
+                    if two(l2[0],l2[1],l2[2],'o') == True: 
+                        flag = 1
+                        opponent = l2[2]
+                        break;
+
+                    j = j+1
+
+                if i==0:
+                    l2[0] = 1
+                    l2[1] = 4
+                    l2[2] = 7
+                if i==3:
+                    l2[0] = 2
+                    l2[1] = 5
+                    l2[2] = 8
+                if i==6:
+                    l2[0] = 2
+                    l2[1] = 4
+                    l2[2] = 6
+                if flag==1:
+                    break;
+                i = i+3
+
+
+            if board[opponent] != 'o' and board[opponent] != 'x':
+                board[opponent] = 'o'
+                count+=1
+                break;
+
+        if checkAll('o') == True:
+                    show()
+                    print ("~~ O WINS ~~")
+                    game = 1
+                    break;
+
+    else:
+        print ('This spot is taken!')
+    show()
+if game==0:
+    print ("Draw")
